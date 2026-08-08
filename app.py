@@ -9,7 +9,7 @@ import time
 
 # simple in-memory cache
 _cache = {"data": None, "timestamp": 0}
-CACHE_DURATION_SECONDS = 300  # 5 minutes
+CACHE_DURATION_SECONDS = 900  # 15 minutes
 
 # Create the FastAPI application object  this is what uvicorn will run
 app = FastAPI(title="BTC Price Direction Predictor")
