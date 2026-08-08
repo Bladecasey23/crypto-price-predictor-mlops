@@ -4,6 +4,17 @@ A real-time machine learning service that predicts whether Bitcoin's price will 
 
 This project focuses on **ML engineering** as much as modeling: live data ingestion, a served prediction API, automated testing, and containerized deployment — not just a notebook.
 
+## Live Demo
+
+**API is deployed and publicly accessible at:**
+[https://btc-price-predictor-n2ga.onrender.com](https://btc-price-predictor-n2ga.onrender.com)
+
+Try the live prediction endpoint: [https://btc-price-predictor-n2ga.onrender.com/predict](https://btc-price-predictor-n2ga.onrender.com/predict)
+
+Interactive API docs: [https://btc-price-predictor-n2ga.onrender.com/docs](https://btc-price-predictor-n2ga.onrender.com/docs)
+
+> **Note:** hosted on Render's free tier, which spins down after 15 minutes of inactivity. The first request after a period of idle time may take 30–60 seconds to respond while the service wakes up — subsequent requests are fast.
+
 ## Problem Statement
 
 Short-term cryptocurrency price movement is notoriously difficult to predict — even professional quantitative trading firms with vastly more data and compute typically achieve only a small edge over random chance. This project doesn't attempt to "beat the market." Instead, it demonstrates a complete, honest, real-time ML pipeline: pulling live price data, engineering time-series features, training and evaluating a classifier, and serving live predictions through a deployed API.
@@ -112,6 +123,5 @@ Python, pandas, scikit-learn, FastAPI, uvicorn, joblib, pytest, Docker
 
 - Add more features (RSI, MACD, hour-of-day/day-of-week seasonality)
 - Retrain periodically on a rolling data window
-- Add GitHub Actions CI to run tests automatically on push
-- Deploy publicly (Render/Railway) for a live, shareable API endpoint
 - Build a lightweight dashboard showing live price vs. live prediction over time
+- Upgrade to a paid tier to eliminate cold-start delays
