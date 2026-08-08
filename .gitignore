@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+btc_prices.csv
+btc_features.csv
+btc_features_clean.csv
