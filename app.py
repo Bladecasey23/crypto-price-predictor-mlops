@@ -4,6 +4,7 @@ import requests
 import joblib
 from features_lib import build_features, FEATURE_COLUMNS
 from fastapi.responses import FileResponse
+from fastapi import HTTPException
 
 # Create the FastAPI application object  this is what uvicorn will run
 app = FastAPI(title="BTC Price Direction Predictor")
@@ -19,15 +20,29 @@ def fetch_recent_prices():
     We need at least 24+ hours of history because our features
     include a 24-hour rolling average.
     """
-    url = 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart'
-    params = {'vs_currency': 'usd', 'days': '3', 'interval': 'hourly'}
-    response = requests.get(url, params=params)
-    data = response.json()
+    def fetch_recent_prices():
+        url = 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart'
+        params = {'vs_currency': 'usd', 'days': '3', 'interval': 'hourly'}
+        response = requests.get(url, params=params, timeout=10)
 
-    prices = data['prices']
-    df = pd.DataFrame(prices, columns=['timestamp', 'price'])
-    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-    return df
+        if response.status_code != 200:
+            raise HTTPException(
+                status_code=503,
+                detail=f"Price data provider unavailable (status {response.status_code}). Please try again shortly."
+            )
+
+        data = response.json()
+
+        if 'prices' not in data:
+            raise HTTPException(
+                status_code=503,
+                detail="Price data provider returned an unexpected response. Please try again shortly."
+            )
+
+        prices = data['prices']
+        df = pd.DataFrame(prices, columns=['timestamp', 'price'])
+        df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+        return df
 
 
 @app.get("/")
