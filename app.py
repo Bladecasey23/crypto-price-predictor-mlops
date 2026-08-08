@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import joblib
 from features_lib import build_features, FEATURE_COLUMNS
+from fastapi.responses import FileResponse
 
 # Create the FastAPI application object  this is what uvicorn will run
 app = FastAPI(title="BTC Price Direction Predictor")
@@ -31,9 +32,7 @@ def fetch_recent_prices():
 
 @app.get("/")
 def root():
-    """A simple homepage endpoint, just to confirm the API is alive."""
-    return {"message": "BTC Price Direction Predictor is running. Go to /predict for a live prediction."}
-
+    return FileResponse("index.html")
 
 @app.get("/predict")
 def predict():
