@@ -5,6 +5,11 @@ import joblib
 from features_lib import build_features, FEATURE_COLUMNS
 from fastapi.responses import FileResponse
 from fastapi import HTTPException,FastAPI
+import time
+
+# simple in-memory cache
+_cache = {"data": None, "timestamp": 0}
+CACHE_DURATION_SECONDS = 300  # 5 minutes
 
 # Create the FastAPI application object  this is what uvicorn will run
 app = FastAPI(title="BTC Price Direction Predictor")
@@ -48,26 +53,31 @@ def root():
 
 @app.get("/predict")
 def predict():
-    """
-    The main endpoint. Fetches fresh price data, builds features,
-    and returns the model's prediction for the next hour's direction.
-    """
+    now = time.time()
+
+    # Return cached result if it's still fresh
+    if _cache["data"] and (now - _cache["timestamp"] < CACHE_DURATION_SECONDS):
+        return _cache["data"]
+
     df = fetch_recent_prices()
     df = build_features(df)
-
-    # Drop rows with NaN (the rolling-window warm-up period) 
-    # we only care about the very LATEST row, which is now fully computed
     df_clean = df.dropna().reset_index(drop=True)
 
-    latest_row = df_clean.iloc[[-1]]  # the most recent hour, as a DataFrame (double brackets keep it 2D)
+    latest_row = df_clean.iloc[[-1]]
     X_latest = latest_row[FEATURE_COLUMNS]
 
     prediction = model.predict(X_latest)[0]
-    probability = model.predict_proba(X_latest)[0]  # [prob_down, prob_up]
+    probability = model.predict_proba(X_latest)[0]
 
-    return {
+    result = {
         "timestamp": str(latest_row['timestamp'].values[0]),
         "current_price": float(latest_row['price'].values[0]),
         "prediction": "up" if prediction == 1 else "down",
         "confidence": float(max(probability))
     }
+
+    # Save to cache
+    _cache["data"] = result
+    _cache["timestamp"] = now
+
+    return result
