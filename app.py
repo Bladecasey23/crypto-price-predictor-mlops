@@ -25,7 +25,14 @@ def fetch_recent_prices():
         include a 24-hour rolling average.
         """
     url = 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart'
-    params = {'vs_currency': 'usd', 'days': '3', 'interval': 'hourly'}
+    params = {
+              'vs_currency': 'usd',
+              'days': '3',
+              'interval': 'hourly'
+             }
+    headers = {
+        'User-Agent': 'BTC-Price-Predictor/1.0'
+    }
     response = requests.get(url, params=params, timeout=10)
 
     if response.status_code != 200:
