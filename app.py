@@ -103,17 +103,21 @@ def refresh_loop():
     """
     Runs forever in a background thread, refreshing the cache
     every CACHE_DURATION_SECONDS. Never raises — a failed refresh
-    just keeps serving the last good cached result.
+    just keeps serving the last good cached result and retries
+    sooner (RETRY_DELAY_SECONDS) instead of waiting a full cycle.
     """
+    RETRY_DELAY_SECONDS = 15
+
     while True:
-        time.sleep(CACHE_DURATION_SECONDS)
         try:
             result = compute_prediction()
             with _cache_lock:
                 _cache["data"] = result
                 _cache["timestamp"] = time.time()
+            time.sleep(CACHE_DURATION_SECONDS)
         except Exception as e:
             print(f"Background refresh failed: {e}")
+            time.sleep(RETRY_DELAY_SECONDS)
 
 
 @app.on_event("startup")
