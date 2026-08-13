@@ -35,6 +35,12 @@ def fetch_recent_prices():
     }
     response = requests.get(url, params=params, timeout=10)
 
+    if response.status_code == 429:
+    raise HTTPException(
+        status_code=429,
+        detail="CoinGecko rate limit reached. Please try again shortly."
+    )
+    
     if response.status_code != 200:
         raise HTTPException(
             status_code=503,
