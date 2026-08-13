@@ -21,7 +21,7 @@ Short-term cryptocurrency price movement is notoriously difficult to predict —
 
 ## Data
 
-- **Source:** [CoinGecko API](https://www.coingecko.com/en/api) — free, no API key required
+- **Source:** [CoinGecko API](https://www.coingecko.com/en/api) — free, demo API key required
 - **Asset:** Bitcoin (BTC), priced in USD
 - **Granularity:** Hourly price data, ~90 days of history for training (~2,160 data points)
 
