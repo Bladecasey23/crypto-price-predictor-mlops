@@ -406,7 +406,7 @@
 </div>
 
 <script>
-  const REFRESH_SECONDS = 60;
+  const REFRESH_SECONDS = 900;
   let countdownRemaining = REFRESH_SECONDS;
 
   function fmtUsd(value) {
@@ -452,7 +452,7 @@
       statusLine.classList.remove('error');
     } catch (err) {
       liveDot.classList.remove('on');
-      statusLine.textContent = 'Could not reach the model right now — the free-tier service may be waking up (can take up to a minute). Retrying automatically.';
+      statusLine.textContent = 'Live market data is temporarily rate-limited. The prediction will retry automatically.';
       statusLine.classList.add('error');
     }
     countdownRemaining = REFRESH_SECONDS;
