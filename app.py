@@ -33,7 +33,7 @@ def fetch_recent_prices():
     headers = {
         'User-Agent': 'BTC-Price-Predictor/1.0'
     }
-    response = requests.get(url, params=params, timeout=10)
+    response = requests.get(url, params=params,headers=headers, timeout=10)
 
     if response.status_code == 429:
     raise HTTPException(
