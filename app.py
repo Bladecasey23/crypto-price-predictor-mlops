@@ -6,6 +6,7 @@ from features_lib import build_features, FEATURE_COLUMNS
 from fastapi.responses import FileResponse
 import time
 import threading
+import os
 
 # Simple in-memory cache
 _cache = {"data": None, "timestamp": 0}
@@ -34,6 +35,13 @@ def fetch_recent_prices():
     headers = {
         "User-Agent": "BTC-Price-Predictor/1.0"
     }
+
+    # If a CoinGecko Demo API key is set, use it — bumps the rate limit
+    # from a shared 5-15 calls/min to a dedicated 30 calls/min.
+    api_key = os.environ.get("COINGECKO_API_KEY")
+    if api_key:
+        headers["x-cg-demo-api-key"] = api_key
+
     response = requests.get(
         url,
         params=params,
