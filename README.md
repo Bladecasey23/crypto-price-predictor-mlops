@@ -7,11 +7,11 @@ This project focuses on **ML engineering** as much as modeling: live data ingest
 ## Live Demo
 
 **API is deployed and publicly accessible at:**
-[[https://crypto-price-predictor-n2ga.onrender.com](https://crypto-price-predictor-mlops.onrender.com)]
+[https://crypto-price-predictor-n2ga.onrender.com](https://crypto-price-predictor-mlops.onrender.com)
 
-Try the live prediction endpoint: [https://btc-price-predictor-n2ga.onrender.com/predict](https://btc-price-predictor-n2ga.onrender.com/predict)
+Try the live prediction endpoint: [https://crypto-price-predictor-n2ga.onrender.com/predict](https://crypto-price-predictor-n2ga.onrender.com/predict)
 
-Interactive API docs: [https://btc-price-predictor-n2ga.onrender.com/docs](https://btc-price-predictor-n2ga.onrender.com/docs)
+Interactive API docs: [https://crypto-price-predictor-n2ga.onrender.com/docs](https://crypto-price-predictor-n2ga.onrender.com/docs)
 
 > **Note:** hosted on Render's free tier, which spins down after 15 minutes of inactivity. The first request after a period of idle time may take 30–60 seconds to respond while the service wakes up — subsequent requests are fast.
 
