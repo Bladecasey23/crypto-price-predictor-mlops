@@ -7,7 +7,7 @@ This project focuses on **ML engineering** as much as modeling: live data ingest
 ## Live Demo
 
 **API is deployed and publicly accessible at:**
-[https://btc-price-predictor-n2ga.onrender.com](https://btc-price-predictor-n2ga.onrender.com)
+[[https://crypto-price-predictor-n2ga.onrender.com](https://crypto-price-predictor-mlops.onrender.com)]
 
 Try the live prediction endpoint: [https://btc-price-predictor-n2ga.onrender.com/predict](https://btc-price-predictor-n2ga.onrender.com/predict)
 
